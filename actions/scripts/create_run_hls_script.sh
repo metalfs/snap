@@ -55,7 +55,7 @@ function usage() {
 }
 
 # Parse any options given on the command line
-while getopts ":n:d:w:p:c:f:s:x:Vh" opt; do
+while getopts ":n:d:w:p:c:f:t:s:x:Vh" opt; do
   case ${opt} in
       n)
       name=$OPTARG
@@ -74,6 +74,9 @@ while getopts ":n:d:w:p:c:f:s:x:Vh" opt; do
       ;;
       f)
       files=$OPTARG
+      ;;
+      t)
+      testbench_files=$OPTARG
       ;;
       s)
       snap_root=$OPTARG
@@ -112,6 +115,10 @@ set_top ${wrapper}
 # Can that be a list?
 foreach file [ list ${files} ] {
   add_files \${file} -cflags "$cflags -I$snap_root/actions/include -I$snap_root/software/include -I../../../software/examples -I../include"
+  add_files -tb \${file} -cflags "$cflags -DNO_SYNTH -I$snap_root/actions/include -I$snap_root/software/include -I../../../software/examples -I../include"
+}
+
+foreach file [ list ${testbench_files} ] {
   add_files -tb \${file} -cflags "$cflags -DNO_SYNTH -I$snap_root/actions/include -I$snap_root/software/include -I../../../software/examples -I../include"
 }
 

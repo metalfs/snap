@@ -82,8 +82,9 @@ run_hls_script.tcl: $(SNAP_ROOT)/actions/scripts/create_run_hls_script.sh
 		-d $(SOLUTION_DIR) 		\
 		-w $(WRAPPER)			\
 		-p $(PART_NUMBER)		\
-		-c $(HLS_ACTION_CLOCK)		\
+		-c $(HLS_ACTION_CLOCK)	\
 		-f "$(srcs)" 			\
+		-t "$(testbench_srcs)"	\
 		-s $(SNAP_ROOT) 		\
 		-x "$(HLS_CFLAGS)" > $@
 
@@ -110,7 +111,7 @@ check: $(syn_dir)
 	fi
 	@echo -n "   Checking for critical warnings during HLS synthesis .... "
 	@grep -A8 CRITICAL vivado_hls.log;  \
-		test $$? = 1 
+		test $$? = 1
 	@echo "OK"
 	@if [ $(HLS_ACTION_CLOCK) == $(HLS_ACTION_CLOCK_DEFAULT) ]; then                \
 		echo -n "   Checking for critical timings during HLS synthesis  .... ";    \
@@ -148,7 +149,7 @@ check: $(syn_dir)
 	else \
 		echo "OK"; \
 	fi
-	@sleep 2; 
+	@sleep 2;
 
 clean:
 	@$(RM) -r $(SOLUTION_DIR)* run_hls_script.tcl *~ *.log \
