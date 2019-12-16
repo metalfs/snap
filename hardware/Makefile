@@ -27,7 +27,7 @@ PLATFORM ?= $(shell uname -i)
 
 export SNAP_ROOT=$(abspath ..)
 export SNAP_HARDWARE_ROOT=$(SNAP_ROOT)/hardware
-export LOGS_DIR=$(SNAP_HARDWARE_ROOT)/logs
+export LOGS_DIR?=$(SNAP_HARDWARE_ROOT)/logs
 export MAKE_TARGET=$(MAKECMDGOALS)
 export SNAP_CFLAGS
 
